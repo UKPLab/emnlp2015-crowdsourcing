@@ -16,5 +16,7 @@ public interface EJConstants
     
     public static final String RTENEWEXPERIMENT = "RteNewExperiment_mv";
     
+    public static final String RTEORIGINALEXPERIMENT = "RteOriginalExperiment_test";
+    
 
 }

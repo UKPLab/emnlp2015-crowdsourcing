@@ -18,17 +18,17 @@ public class RunBiasedLangExperiment
     	Date startdate = new Date();
         // Train method; data size; EJConstants name.
         ExperimentUtils.emptyRepository();
-        start("scripts/BiasedLangRegressionExperiment.groovy");
-        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 0, 200);
-        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 0, 79);
-        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 80, 119);
-        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 120, 200);
+//        start("scripts/BiasedLangRegressionExperiment.groovy");
+//        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 0, 200);
+//        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 0, 79);
+//        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 80, 119);
+//        CombineTestResultsRegression.callFromGroovyStarter(EJConstants.BIASEDLANGREGRESSEXPERIMENT, 120, 200);
 //        ExperimentUtils.saveWekaTrainTest(EJConstants.BIASEDLANGREGRESSEXPERIMENT);
 //        ExperimentUtils.emptyRepository();
         
         
         
-//      start("scripts/BiasedLangClassificationExperiment.groovy");
+      start("scripts/BiasedLangClassificationExperiment.groovy");
 //        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.BIASEDLANGCLASSEXPERIMENT, 0, 100);
 //      ExperimentUtils.saveWekaTrainTest();
 //      ExperimentUtils.emptyRepository();

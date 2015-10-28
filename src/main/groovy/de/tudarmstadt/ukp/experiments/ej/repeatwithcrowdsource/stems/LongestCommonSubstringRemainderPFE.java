@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -148,7 +150,7 @@ public class LongestCommonSubstringRemainderPFE
      * that use the metacollector, and run as MC-less.
      */
 	@Override
-	public List<Feature> extract(JCas view1, JCas view2)
+	public Set<Feature> extract(JCas view1, JCas view2)
 			throws TextClassificationException
 		{
 		String first = view1.getDocumentText();
@@ -161,7 +163,7 @@ public class LongestCommonSubstringRemainderPFE
 //		System.out.println("Rema1: " + LongestCommonSubstringUtils.getRemainderOfString(first, second, commonSubstring, 1));
 //		System.out.println("Rema2: " + LongestCommonSubstringUtils.getRemainderOfString(first, second, commonSubstring, 2));
 
-        List<Feature> features = new ArrayList<Feature>();
+        Set<Feature> features = new HashSet<Feature>();
 		String remainder0 = LongestCommonSubstringUtils.getRemainderOfString(first, second, commonSubstring);
 		String remainder1 = LongestCommonSubstringUtils.getRemainderOfString(first, second, commonSubstring, 1);
 		String remainder2 = LongestCommonSubstringUtils.getRemainderOfString(first, second, commonSubstring, 2);

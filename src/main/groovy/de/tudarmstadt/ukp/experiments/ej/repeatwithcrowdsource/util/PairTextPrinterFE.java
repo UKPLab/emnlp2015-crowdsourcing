@@ -2,6 +2,7 @@ package de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.uima.jcas.JCas;
 
@@ -22,7 +23,7 @@ public class PairTextPrinterFE
 {
 
 	@Override
-	public List<Feature> extract(JCas view1, JCas view2)
+	public Set<Feature> extract(JCas view1, JCas view2)
 			throws TextClassificationException
 		{
 //		System.out.println("Text1: " + view1.getDocumentText());
@@ -31,7 +32,7 @@ public class PairTextPrinterFE
 		DocumentMetaData dmd = DocumentMetaData.get(view1);
 //		System.out.println("Dmd docid: " + dmd.getDocumentId().replaceAll("TEXT", ""));
 		
-		return Arrays.asList(
+		return (Set<Feature>) Arrays.asList(
 				new Feature("SampleFeature", 0));
 		}
 }

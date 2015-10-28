@@ -29,8 +29,9 @@ import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J
 import de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer
 import de.tudarmstadt.ukp.dkpro.lab.Lab
 import de.tudarmstadt.ukp.dkpro.lab.task.Dimension
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy
+//import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask //old
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask.ExecutionPolicy
 import de.tudarmstadt.ukp.dkpro.tc.core.Constants
 import de.tudarmstadt.ukp.dkpro.tc.core.GroovyExperiment
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.chunk.DiffNounChunkCharacterLength;
@@ -45,29 +46,24 @@ import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.CosineFeatureExtract
 //import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ne.SharedNEsFeatureExtractor
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.GreedyStringTilingFeatureExtractor;
 import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter;
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.MatrixReport
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.MatrixReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchOutcomeIDReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchOutcomeIDReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchCrossValidationReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchCrossValidationReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchTrainTestReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchTrainTestReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchRuntimeReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchRuntimeReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
+import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
 import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaClassificationReport
 //import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskTrainTest
 //import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskCrossValidation
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
-import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
 //import de.tudarmstadt.ukp.dkpro.tc.weka.task.WekaTestTask
+import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
 import de.tudarmstadt.ukp.dkpro.tc.weka.writer.WekaDataWriter
 import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext;
 import dkpro.similarity.algorithms.lexical.string.CosineSimilarity;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdAnnotation;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdsourcePairReaderBase;
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.MatrixReport
 
 /**
  * RTE task from Snow et al 2008.

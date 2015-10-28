@@ -19,8 +19,10 @@ package de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.pos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.fit.internal.ReflectionUtil;
@@ -61,11 +63,11 @@ public class HovyTwitterPosTagUFE
     }
 
     @Override
-    public List<Feature> extract(JCas jcas, TextClassificationUnit classificationUnit)
+    public Set<Feature> extract(JCas jcas, TextClassificationUnit classificationUnit)
         throws TextClassificationException
     {
 
-        List<Feature> featList = new ArrayList<Feature>();
+        Set<Feature> featList = new HashSet<Feature>();
         String text = classificationUnit.getCoveredText().toLowerCase();
         
         String featureName = "firstupper";

@@ -1,7 +1,9 @@
 package de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.stems;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.uima.jcas.JCas;
 
@@ -27,7 +29,7 @@ public class LuceneCharacterNGramPFE
     }
 	
     @Override
-    public List<Feature> extract(JCas view1, JCas view2)
+    public Set<Feature> extract(JCas view1, JCas view2)
         throws TextClassificationException
     {
     	FrequencyDistribution<String> view1Ngrams = NGramUtils.getDocumentCharacterNgrams(view1, ngramLowerCase, ngramMinN1, ngramMaxN1);
@@ -38,7 +40,7 @@ public class LuceneCharacterNGramPFE
 //                ngramMinN2, ngramMaxN2, stopwords);
         FrequencyDistribution<String> allNgrams = getViewNgrams(view1, view2);
 
-        List<Feature> features = new ArrayList<Feature>();
+        Set<Feature> features = new HashSet<Feature>();
         if (useView1NgramsAsFeatures) {
             prefix = "view1NG";
             features = addToFeatureArray(view1Ngrams, topKSetView1, features);
@@ -58,12 +60,6 @@ public class LuceneCharacterNGramPFE
             features = addToFeatureArray(view2Ngrams, topKSet, features);
         }
         
-//        int i = 0;
-//        while(i<10){
-//        	System.out.println(features.get(i).getName() + "  " + features.get(i).getValue());
-//        	i++;
-//        }
-        
         return features;
     }
 	
@@ -73,8 +69,6 @@ public class LuceneCharacterNGramPFE
         List<JCas> jcases = new ArrayList<JCas>();
         jcases.add(view1);
         jcases.add(view2);
-//        return ComboUtils.getMultipleViewNgrams(jcases, null, ngramLowerCase,
-//                filterPartialStopwordMatches, ngramMinN, ngramMaxN, stopwords);
         return LuceneCharacterNGramPMetaCollector.getMultipleViewCharacterNgrams(jcases, ngramLowerCase, ngramMinN, ngramMaxN);
     }
     

@@ -19,10 +19,10 @@ public class RunStemsExperiment
         ExperimentUtils.emptyRepository();
         start("scripts/StemsExperiment.groovy");
         CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 0, 200);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 0, 50);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 51, 150);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 151, 200);
-        ExperimentUtils.saveWekaTrainTest(EJConstants.STEMSEXPERIMENT);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 0, 50);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 51, 150);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.STEMSEXPERIMENT, 151, 200);
+//        ExperimentUtils.saveWekaTrainTest(EJConstants.STEMSEXPERIMENT);
 //        ExperimentUtils.emptyRepository();
         
     	Date enddate = new Date();

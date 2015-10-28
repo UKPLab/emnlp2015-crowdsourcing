@@ -27,8 +27,8 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter
 import de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer
 import de.tudarmstadt.ukp.dkpro.lab.Lab
 import de.tudarmstadt.ukp.dkpro.lab.task.Dimension
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask.ExecutionPolicy
 import de.tudarmstadt.ukp.dkpro.tc.core.Constants
 import de.tudarmstadt.ukp.dkpro.tc.core.GroovyExperiment
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ngram.LuceneNGramCPFE;
@@ -37,16 +37,12 @@ import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.CosineFeatureExtract
 //import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ngram.LuceneNGramPairFeatureExtractor
 //import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ne.SharedNEsFeatureExtractor
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.GreedyStringTilingFeatureExtractor;
-import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter;
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.MatrixReport
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.MatrixReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchOutcomeIDReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchCrossValidationReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchTrainTestReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchRuntimeReport
+import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchOutcomeIDReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchCrossValidationReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchTrainTestReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchRuntimeReport
 import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaClassificationReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.task.BatchTaskCrossValidationWithFoldControl
-import de.tudarmstadt.ukp.dkpro.tc.weka.task.CrossValidationExperimentWithFoldControl
 //import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskTrainTest
 //import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskCrossValidation
 import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
@@ -58,7 +54,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext;
 import dkpro.similarity.algorithms.lexical.string.CosineSimilarity;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdAnnotation;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdsourcePairReaderBase;
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.MatrixReport
 
 /**
  * Stemming experiments.  Data from Alias-i, I collected with Bob.
@@ -254,7 +251,7 @@ Constants, EJConstants
                 dimPipelineParameters
             ],
             executionPolicy: ExecutionPolicy.RUN_AGAIN,
-            reports:         [WekaBatchCrossValidationReport,
+            reports:         [BatchCrossValidationReport,
 				MatrixReport], //, CVFoldReport, BatchRuntimeReport, BatchCrossValidationReport, PrintToStdOutReport
             numFolds: numFolds];
 //      batchTask.setComparator(myComparator);
@@ -286,9 +283,9 @@ Constants, EJConstants
             ],
             executionPolicy: ExecutionPolicy.RUN_AGAIN,
             reports:         [
-                WekaBatchTrainTestReport,
-                WekaBatchOutcomeIDReport, 
-                WekaBatchRuntimeReport,
+                BatchTrainTestReport,
+                BatchOutcomeIDReport, 
+                BatchRuntimeReport,
 				MatrixReport]
         ];
 

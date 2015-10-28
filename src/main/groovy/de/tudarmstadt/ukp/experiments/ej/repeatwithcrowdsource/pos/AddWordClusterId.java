@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.jcas.JCas;
@@ -62,7 +63,7 @@ public class AddWordClusterId
 	// (they used every 2 to save feature space)
 	// {11, 1101, 110100, 11010001, 1101000101}
 	@Override
-	public List<Feature> extract(JCas view,
+	public Set<Feature> extract(JCas view,
 			TextClassificationUnit classificationUnit)
 		throws TextClassificationException
 	{
@@ -71,7 +72,7 @@ public class AddWordClusterId
 
 		List<String> prefixesInThisInstance = getClusterPrefixes(resourceValue);
 		
-		List<Feature> featList = new ArrayList<Feature>();
+		Set<Feature> featList = new HashSet<Feature>();
 		for(String val: allPossibleFeatures){
 			if(prefixesInThisInstance.contains(val)){
 				featList.add(new Feature(setFeatureName() + val, 1));

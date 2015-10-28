@@ -20,17 +20,25 @@ import weka.classifiers.functions.SMO
 import weka.classifiers.trees.J48
 import weka.classifiers.rules.ZeroR;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Stem
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpChunker
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter
+import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J
 import de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer
 import de.tudarmstadt.ukp.dkpro.lab.Lab
 import de.tudarmstadt.ukp.dkpro.lab.task.Dimension
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy
+//import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask //old
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask.ExecutionPolicy
 import de.tudarmstadt.ukp.dkpro.tc.core.Constants
 import de.tudarmstadt.ukp.dkpro.tc.core.GroovyExperiment
+import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.chunk.DiffNounChunkCharacterLength;
+import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.chunk.DiffNounChunkTokenLength;
+import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.chunk.SharedNounChunks;
+import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.length.DiffNrOfTokensPairFeatureExtractor;
+import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ne.SharedNEsFeatureExtractor;
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ngram.LuceneNGramCPFE;
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ngram.LuceneNGramPFE;
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.CosineFeatureExtractor;
@@ -38,26 +46,24 @@ import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.CosineFeatureExtract
 //import de.tudarmstadt.ukp.dkpro.tc.features.pair.core.ne.SharedNEsFeatureExtractor
 import de.tudarmstadt.ukp.dkpro.tc.features.pair.similarity.GreedyStringTilingFeatureExtractor;
 import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter;
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.MatrixReport
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.MatrixReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchOutcomeIDReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchCrossValidationReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchTrainTestReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchRuntimeReport
-import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaClassificationReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.task.BatchTaskCrossValidationWithFoldControl
-import de.tudarmstadt.ukp.dkpro.tc.weka.task.CrossValidationExperimentWithFoldControl
-//import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskTrainTest
-//import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskCrossValidation
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchOutcomeIDReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchCrossValidationReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchTrainTestReport
+import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchRuntimeReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
 import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
-import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
+import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaClassificationReport
+//import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskTrainTest
+//import de.tudarmstadt.ukp.dkpro.tc.ml.task.BatchTaskCrossValidation
 //import de.tudarmstadt.ukp.dkpro.tc.weka.task.WekaTestTask
+import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
 import de.tudarmstadt.ukp.dkpro.tc.weka.writer.WekaDataWriter
 import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext;
 import dkpro.similarity.algorithms.lexical.string.CosineSimilarity;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdAnnotation;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.CrowdsourcePairReaderBase;
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.MatrixReport
 
 /**
  * Discourse Turn Pairwise classification
@@ -75,12 +81,15 @@ Constants
     def String experimentName;
     def String corpusNameTrain;
     def String corpusNameTest;
+	def String idFileTrain;
+	def String idFileTest;
     def dimReaders;
     def languageCode = "en";
     def corpusDirectory = DkproContext.getContext().getWorkspace("corpora").getAbsolutePath() + "/SnowEtAl2008/RTE/";
 
     def instanceModeTrain = CrowdsourcePairReaderBase.InstanceCreationModes.ORIGINAL
     def instanceModeTest = CrowdsourcePairReaderBase.InstanceCreationModes.ORIGINAL
+	def reducedDatasetSize = 8000; //debugging: num to reduce train data to. all>800 rte sentence pairs.
     def crowdAnnosFile = "rte.standardized.tsv";
     def numFolds = 2; //"Original" setup was train-test, not CV.
     
@@ -95,8 +104,12 @@ Constants
             corpusDirectory+corpusNameTrain, 
             RteReader.PARAM_CROWDFILE,
             corpusDirectory+crowdAnnosFile,
+            RteReader.PARAM_IDFILE,
+            corpusDirectory+idFileTrain, 
             RteReader.PARAM_LANGUAGE_CODE,
             languageCode,
+			RteReader.PARAM_SHRINK_DATASET_SIZE_FOR_DEBUGGING,
+			reducedDatasetSize,
             RteReader.PARAM_BALANCE_CLASSES,
             true,
             RteReader.PARAM_INSTANCE_MODE,
@@ -108,6 +121,8 @@ Constants
             corpusDirectory+corpusNameTest,
             RteReader.PARAM_CROWDFILE,
             corpusDirectory+crowdAnnosFile,
+            RteReader.PARAM_IDFILE,
+            corpusDirectory+idFileTest, 
             RteReader.PARAM_LANGUAGE_CODE,
             languageCode,
             RteReader.PARAM_BALANCE_CLASSES,
@@ -164,6 +179,21 @@ Constants
         applySelection: false
     ]);
 
+	def setExperimentName(String aName){
+		experimentName = aName;
+	}
+	def setCorpusNameTrain(String aName){
+		corpusNameTrain = aName;
+	}
+	def setCorpusNameTest(String aName){
+		corpusNameTest = aName;
+	}
+	def setIdFileTrain(String aName){
+		idFileTrain = aName;
+	}
+	def setIdFileTest(String aName){
+		idFileTest = aName;
+	}
 
     // === Experiments =========================================================
     /**
@@ -210,7 +240,7 @@ Constants
                 dimPipelineParameters
             ],
             executionPolicy: ExecutionPolicy.RUN_AGAIN,
-            reports:         [WekaBatchCrossValidationReport,
+            reports:         [BatchCrossValidationReport,
                 MatrixReport], //, CVFoldReport, BatchRuntimeReport, BatchCrossValidationReport, PrintToStdOutReport
             numFolds: numFolds];
 //      batchTask.setComparator(myComparator);
@@ -242,9 +272,9 @@ Constants
             ],
             executionPolicy: ExecutionPolicy.RUN_AGAIN,
             reports:         [
-                WekaBatchTrainTestReport,
-                WekaBatchOutcomeIDReport, 
-                WekaBatchRuntimeReport,
+                BatchTrainTestReport,
+                BatchOutcomeIDReport, 
+                BatchRuntimeReport,
 				MatrixReport]
         ];
 
@@ -262,17 +292,27 @@ Constants
         createEngineDescription(StanfordPosTagger.class)
         );
     }
+	
+	public void runManualCVExperiment(){
+		// rte_orig_dev.xml rte_orig_dev2.xml rte_orig_annotated_test.xml rte_orig_dev_combo.xml
+		// Only rte_orig_annotated_test.xml has crowd annotations.
+		RteOriginalExperiment experiment = new RteOriginalExperiment();
+		experiment.setExperimentName(EJConstants.RTEORIGINALEXPERIMENT);
+		//numFolds doesn't have to be max available, for dev purposes.
+		int numFolds = numFolds;
+		for(int i=0;i<numFolds;i++){
+			experiment.setCorpusNameTrain("rte_orig_annotated_test.xml");
+			experiment.setCorpusNameTest("rte_orig_annotated_test.xml");
+			experiment.setIdFileTrain("/CVFiles/rte_orig_annotated_test_EJ.r" + i + ".finaltrain.txt");
+			experiment.setIdFileTest("/CVFiles/rte_orig_annotated_test_EJ.r" + i + ".finaltest.txt");
+			experiment.setDimReaders();
+			experiment.runTrainTest();
+		}
+	}
+	
     public void run()
     {
-        RteOriginalExperiment experiment = new RteOriginalExperiment();
-        // rte_orig_dev.xml rte_orig_dev2.xml rte_orig_annotated_test.xml rte_orig_dev_combo.xml
-        
-        experiment.setExperimentName("Rte1OriginalExperiment");
-        experiment.setCorpusNameTrain("rte_orig_dev_combo.xml"); //yes test.  For results replication.
-        experiment.setCorpusNameTest("rte_orig_dev_combo.xml");
-        experiment.setDimReaders();
-        experiment.runTrainTest();
-        
+        runManualCVExperiment();
     }
 
     public static void main(String[] args)

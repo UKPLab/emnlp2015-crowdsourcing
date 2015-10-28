@@ -20,14 +20,14 @@ public class RunRteExperiment
       ExperimentUtils.emptyRepository();
       start("scripts/RteNewExperiment.groovy");
       CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 0, 200);
-      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 0, 100);
-      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 101, 130);
-      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 131, 200);
+//      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 0, 100);
+//      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 101, 130);
+//      CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTENEWEXPERIMENT, 131, 200);
 //      ExperimentUtils.saveWekaTrainTest(EJConstants.RTENEWEXPERIMENT);
 //      ExperimentUtils.emptyRepository();
       
 //    start("scripts/RteOriginalExperiment.groovy");
-//  CombineTestResultsClassification.callFromGroovyStarter("Rte1OriginalExperiment", 10, 80);
+//  CombineTestResultsClassification.callFromGroovyStarter(EJConstants.RTEORIGINALEXPERIMENT, 0, 200);
     
         
     	Date enddate = new Date();

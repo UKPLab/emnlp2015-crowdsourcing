@@ -27,7 +27,8 @@ import org.apache.uima.resource.ResourceInitializationException
 
 import de.tudarmstadt.ukp.dkpro.lab.Lab
 import de.tudarmstadt.ukp.dkpro.lab.task.Dimension
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy
+//import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy //old
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask.ExecutionPolicy
 import de.tudarmstadt.ukp.dkpro.tc.core.Constants
 import de.tudarmstadt.ukp.dkpro.tc.features.length.NrOfTokensUFE
 import de.tudarmstadt.ukp.dkpro.tc.features.ngram.LuceneNGramUFE
@@ -37,11 +38,11 @@ import de.tudarmstadt.ukp.dkpro.tc.crfsuite.CRFSuiteClassificationReport
 import de.tudarmstadt.ukp.dkpro.tc.crfsuite.CRFSuiteBatchTrainTestReport
 import de.tudarmstadt.ukp.dkpro.tc.crfsuite.CRFSuiteOutcomeIDReport
 import de.tudarmstadt.ukp.dkpro.tc.crfsuite.writer.CRFSuiteDataWriter
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
-import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext;
+import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation
+import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest
+import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.pos.PosReaderBase
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.EJConstants
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.EJConstants
 
 //import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.pos.PosParams;
 //import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource/src/main/resources/scripts/PosParams

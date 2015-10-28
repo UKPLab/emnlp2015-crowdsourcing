@@ -28,23 +28,19 @@ import org.apache.uima.resource.ResourceInitializationException
 import weka.classifiers.functions.SMO;
 import de.tudarmstadt.ukp.dkpro.lab.Lab
 import de.tudarmstadt.ukp.dkpro.lab.task.Dimension
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask.ExecutionPolicy
+import de.tudarmstadt.ukp.dkpro.lab.task.BatchTask.ExecutionPolicy
 import de.tudarmstadt.ukp.dkpro.tc.core.Constants
 import de.tudarmstadt.ukp.dkpro.tc.features.length.NrOfTokensUFE
 import de.tudarmstadt.ukp.dkpro.tc.weka.WekaClassificationAdapter
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchCrossValidationReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchCrossValidationReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchOutcomeIDReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchOutcomeIDReport
-//import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaBatchTrainTestReport
 import de.tudarmstadt.ukp.dkpro.tc.ml.report.BatchTrainTestReport
 import de.tudarmstadt.ukp.dkpro.tc.weka.report.WekaClassificationReport
 import de.tudarmstadt.ukp.dkpro.tc.weka.writer.WekaDataWriter
 import de.tudarmstadt.ukp.dkpro.core.api.resources.DkproContext;
 import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.pos.PosReaderBase;
-import de.tudarmstadt.ukp.experiments.ej.tcextensions.EJConstants;
+import de.tudarmstadt.ukp.experiments.ej.repeatwithcrowdsource.util.EJConstants;
 import de.tudarmstadt.ukp.dkpro.tc.features.ngram.LuceneNGramUFE
-//import de.tudarmstadt.ukp.dkpro.tc.weka.task.CrossValidationExperimentWithFoldControl
 import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
 import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
 
@@ -67,7 +63,7 @@ implements Constants {
 	def instanceModeTrain = PosReaderBase.InstanceCreationModes.HIGHAGREE;
 	def instanceModeTest = PosReaderBase.InstanceCreationModes.MAJVOTE;
 	def shrinkDatasetSizeForDebugging = 2500;
-    def NUM_FOLDS = 10
+    def NUM_FOLDS = 5
 
 	def setDimReaders(){
 		dimReaders =  Dimension.createBundle("readers", [

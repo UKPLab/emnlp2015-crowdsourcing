@@ -25,16 +25,16 @@ public class RunPosExperiment
     	Date startdate = new Date();
 
         ExperimentUtils.emptyRepository();
-        start("scripts/PosSequenceExperiment.groovy");
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 0, 200);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 0, 99);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 100, 149);
-        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 150, 200);
-        ExperimentUtils.saveWekaTrainTest(EJConstants.POSSEQUENCEEXPERIMENT);
+//        start("scripts/PosSequenceExperiment.groovy");
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 0, 200);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 0, 99);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 100, 149);
+//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSSEQUENCEEXPERIMENT, 150, 200);
+//        ExperimentUtils.saveWekaTrainTest(EJConstants.POSSEQUENCEEXPERIMENT);
 //        ExperimentUtils.emptyRepository();
         
-//        start("scripts/PosUnitExperiment.groovy");
-//        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSUNITEXPERIMENT, 0, 100);
+        start("scripts/PosUnitExperiment.groovy");
+        CombineTestResultsClassification.callFromGroovyStarter(EJConstants.POSUNITEXPERIMENT, 0, 200);
         
     	Date enddate = new Date();
     	System.out.println("Started: " + startdate.toString());
