@@ -27,9 +27,7 @@ Processing (EMNLP)},
 ```
 
 > **Abstract:** In order to reduce noise in training data, most natural language crowdsourcing annotation tasks gather redundant labels and aggregate them into an integrated label, which is provided to the classifier. However, aggregation discards potentially useful information from linguistically ambiguous instances.
-
-For five natural language tasks, we pass item agreement on to the task classifier via soft labeling and low-agreement filtering of the training dataset.  
-We find a statistically significant benefit from low item agreement training filtering in four of our five tasks, and no systematic benefit from soft labeling.
+For five natural language tasks, we pass item agreement on to the task classifier via soft labeling and low-agreement filtering of the training dataset.  We find a statistically significant benefit from low item agreement training filtering in four of our five tasks, and no systematic benefit from soft labeling.
 
 
 Contact person: Emily Jamison, EmilyKJamison {at} gmail {dot} com
@@ -44,15 +42,12 @@ Don't hesitate to send us an e-mail or report an issue, if something is broken (
 > This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication. 
 
 ## Project structure
-**(change this as needed!)**
 
-* `folder/a` -- this folder contains xxx
-* `folder/b` -- interesting files here
-* ...
-* `data/xxx` -- my amazing data
+* `src/main/groovy/de/tudarmstadt/ukp/experiments/ej/repeatwithcrowdsource` -- this folder contains java experiment code for 5 natural language tasks
+* `resources/scripts` -- this folder contains the Groovy files where experiment parameters may be set
+* Please note: 3rd party datasets must be downloaded from elsewhere
 
 ## Requirements
-**(change this as needed!)**
 
 * Java 1.7 and higher
 * Maven
@@ -60,7 +55,6 @@ Don't hesitate to send us an e-mail or report an issue, if something is broken (
 * 2 GB RAM
 
 ## Installation
-**(change this as needed!)**
 
 * Follow the DKPro Core instructions to [set your DKPro Home environment variable](https://zoidberg.ukp.informatik.tu-darmstadt.de/jenkins/job/DKPro%20TC%20Documentation%20%28GitHub%29/de.tudarmstadt.ukp.dkpro.tc%24dkpro-tc-doc/doclinks/1/#QuickStart).
 
@@ -85,7 +79,6 @@ etc.
 For each experiment, update file locations in the Groovy file in src/main/resources/scripts (such as method runManualCVExperiment()).
 
 ## Running the experiments
-**(change this as needed!)**
 
 To run an experiment, first set the experiment parameters in the respective Groovy file in src/main/resources/scripts; in particular, you may wish to change the path to your corpus or parameter instanceModeTrain, the feature set, or feature parameters.
 
@@ -94,7 +87,6 @@ Then, run the respective "RunXXXExperiment" in src/main/groovy/EXPERIMENTTORUN/.
 Affective Text experiments run in a few seconds, while POS Tagging experiments may take several hours.
 
 ### Expected results
-**(change this as needed!)**
 
 After running the experiments, results should be printed to stdout.  They can also be found in your dkpro home folder, under de.tudarmstadt.ukp.dkpro.lab/repository.  You can change which results get printed from src/main/groovy/util/CombineTestResultsRegression or CombineTestResultsClassification, as appropriate.  The tasks Biased Language, Affective Text use regression, while Stemming, RTE, and POS Tagging use classification.
 
