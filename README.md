@@ -2,9 +2,6 @@
 
 This project runs experiments comparing the benefit of soft labeling and filtering with label aggregation for learning a classification model n natural language tasks.  This project is the experiment code described in the paper, "Noise or additional information? Leveraging crowdsource annotation item agreement for natural language tasks" (Jamison and Gurevych, 2015).
 
-  
-
-
 Please use the following citation:
 
 ```
