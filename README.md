@@ -48,7 +48,7 @@ Don't hesitate to send us an e-mail or report an issue, if something is broken (
 
 * Java 1.7 and higher
 * Maven
-* Tested on 64-bit Linux with 2 GB RAM ("-Xmx2g")
+* Tested on 64-bit Linux with 2 GB RAM (`-Xmx2g`)
 * 2 GB RAM
 
 ## Installation
@@ -61,7 +61,7 @@ Don't hesitate to send us an e-mail or report an issue, if something is broken (
 
 * For all experiments except Affective Text, prepare your corpus for our experiment architecture by dividing instances into cross-validation rounds of training and test data.  We created "dev" and "final" batches of "train" and "test" datasets, resulting in (for RTE):
 
-...
+```
 rte_orig.r0.devtest.txt
 rte_orig.r0.devtrain.txt
 rte_orig.r0.finaltest.txt
@@ -71,15 +71,15 @@ rte_orig.r1.devtrain.txt
 rte_orig.r1.finaltest.txt
 rte_orig.r1.finaltrain.txt
 etc.
-...
+```
 
-For each experiment, update file locations in the Groovy file in src/main/resources/scripts (such as method runManualCVExperiment()).
+For each experiment, update file locations in the Groovy file in `src/main/resources/scripts` (such as method `runManualCVExperiment()`).
 
 ## Running the experiments
 
-To run an experiment, first set the experiment parameters in the respective Groovy file in src/main/resources/scripts; in particular, you may wish to change the path to your corpus or parameter instanceModeTrain, the feature set, or feature parameters.
+To run an experiment, first set the experiment parameters in the respective Groovy file in `src/main/resources/scripts`; in particular, you may wish to change the path to your corpus or parameter instanceModeTrain, the feature set, or feature parameters.
 
-Then, run the respective "RunXXXExperiment" in src/main/groovy/EXPERIMENTTORUN/.  For example, to run the Biased language experiment, run the class src/main/groovy/biasedlanguage/RunBiasedLangExperiment.
+Then, run the respective "RunXXXExperiment" in `src/main/groovy/EXPERIMENTTORUN/`.  For example, to run the Biased language experiment, run the class `src/main/groovy/biasedlanguage/RunBiasedLangExperiment`.
 
 Affective Text experiments run in a few seconds, while POS Tagging experiments may take several hours.
 
