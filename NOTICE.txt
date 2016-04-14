@@ -1,4 +1,10 @@
-License information, 3rd party libraries
+-------------------------------------------------------------------------------
+Copyright 2016
+Ubiquitous Knowledge Processing (UKP) Lab
+Technische Universität Darmstadt
+
+-------------------------------------------------------------------------------
+Third party legal information
 
 Apache License, Version 2.0 (ASL):
 lucene-core
